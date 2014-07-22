@@ -33,4 +33,7 @@
 	    <item>Hospedagem</item>
 	    <item>Outros</item>
 	</string-array>
+	<string name="sair">Sair</string>
+	<string name="remover_viagem">Remover viagem</string>
+	<string name="remover">Remover</string>
 </resources>
