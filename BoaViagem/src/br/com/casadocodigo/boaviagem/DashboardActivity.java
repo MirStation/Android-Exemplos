@@ -17,15 +17,15 @@ public class DashboardActivity extends Activity {
 	
 	public void selecionarOpcao(View view) {
 
-		/* 1ª versão:
-		TextView textView = (TextView) view;
-		String opcao = "Opção: " + textView.getText().toString();
-		Toast.makeText(this, opcao, Toast.LENGTH_LONG).show();*/
-		
-		/* 2ª versão (atual):*/
 		switch (view.getId()) {
 			case R.id.nova_viagem:
 				startActivity(new Intent(this, ViagemActivity.class));
+				break;
+			case R.id.novo_gasto:
+				startActivity(new Intent(this, GastoActivity.class));
+				break;
+			case R.id.minhas_viagens:
+				startActivity(new Intent(this, ViagemListActivity.class));
 				break;
 			default:
 				TextView textView = (TextView) view;
