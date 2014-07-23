@@ -49,4 +49,6 @@
 	<string name="valor_limite">Alerta de gastos</string>
 	<string name="informe_valor_limite">Informe o valor limite (em %)</string>
 	<string name="manter_conectado">Manter conectado</string>
+	<string name="registro_salvo">Viagem salva com sucesso!</string>
+	<string name="erro_salvar">Ocorreu um erro ao tentar salvar a viagem!</string>
 </resources>

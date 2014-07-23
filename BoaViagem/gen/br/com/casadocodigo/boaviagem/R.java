@@ -82,6 +82,7 @@ public final class R {
         public static final int editar=0x7f06001d;
         public static final int entrar=0x7f060004;
         public static final int erro_autenticacao=0x7f060005;
+        public static final int erro_salvar=0x7f06002b;
         public static final int gastei=0x7f060018;
         public static final int gastos_realizados=0x7f06001e;
         public static final int informe_valor_limite=0x7f060028;
@@ -99,6 +100,7 @@ public final class R {
         public static final int orcamento=0x7f060011;
         public static final int preferencias=0x7f060023;
         public static final int quantidade_de_pessoas=0x7f060012;
+        public static final int registro_salvo=0x7f06002a;
         public static final int remover=0x7f06001c;
         public static final int remover_viagem=0x7f06001b;
         public static final int sair=0x7f06001a;
