@@ -46,8 +46,14 @@ public class GastoListActivity extends ListActivity implements OnItemClickListen
 		return true;
 	}
 	
+//	@Override
+//	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+//		// remover o gasto da base de dados
+//		return true;
+//	}
+	
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		// remover o gasto da base de dados
 		return true;
 	}
@@ -84,6 +90,12 @@ public class GastoListActivity extends ListActivity implements OnItemClickListen
 		item.put("descricao","Transporte");
 		item.put("valor", "R$ 1000,00");
 		item.put("categoria", R.color.categoria_transporte);
+		gastos.add(item);
+		item = new HashMap<String,Object>();
+		item.put("data", "13/09/2014");
+		item.put("descricao","Aniversário");
+		item.put("valor", "R$ 50,00");
+		item.put("categoria", R.color.categoria_outros);
 		gastos.add(item);
 		return gastos;
 	}

@@ -7,8 +7,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class DashboardActivity extends Activity {
 	
@@ -25,8 +23,14 @@ public class DashboardActivity extends Activity {
 		return true;
 	}
 	
+//	@Override
+//	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+//		finish();
+//		return true;
+//	}
+	
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		finish();
 		return true;
 	}
@@ -43,10 +47,8 @@ public class DashboardActivity extends Activity {
 			case R.id.minhas_viagens:
 				startActivity(new Intent(this, ViagemListActivity.class));
 				break;
-			default:
-				TextView textView = (TextView) view;
-				String opcao = "Opção: " + textView.getText().toString();
-				Toast.makeText(this, opcao, Toast.LENGTH_LONG).show();
+			case R.id.configuracoes:
+				startActivity(new Intent(this, ConfiguracoesActivity.class));
 				break;
 		}
 	}

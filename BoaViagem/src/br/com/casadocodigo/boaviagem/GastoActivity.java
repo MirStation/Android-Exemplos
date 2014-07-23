@@ -28,7 +28,7 @@ public class GastoActivity extends Activity {
 		dia = calendar.get(Calendar.DAY_OF_MONTH);
 		dataGasto = (Button) findViewById(R.id.data);
 		dataGasto.setText(dia + " / " + (mes + 1) + " / " + ano);
-		
+		// Dropdown menu para as categorias
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categoria_gasto, android.R.layout.simple_spinner_item);
 		categoria = (Spinner) findViewById(R.id.categoria);
 		categoria.setAdapter(adapter);
