@@ -166,10 +166,13 @@ public class ViagemListActivity extends ListActivity implements OnItemClickListe
 	
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
-		// TODO Auto-generated method stub
+		Intent intent;
+		String id = (String) viagens.get(viagemSelecionada).get("id");
 		switch (which) {
 		case 0:
-			startActivity(new Intent(this,ViagemActivity.class));
+			intent = new Intent(this,ViagemActivity.class);
+			intent.putExtra(Constantes.VIAGEM_ID, id);
+			startActivity(intent);
 			break;
 		case 1:
 			startActivity(new Intent(this,GastoActivity.class));
@@ -182,6 +185,7 @@ public class ViagemListActivity extends ListActivity implements OnItemClickListe
 			break;
 		case DialogInterface.BUTTON_POSITIVE:
 			viagens.remove(this.viagemSelecionada);
+			removerViagem(id);
 			getListView().invalidateViews();
 			break;
 		case DialogInterface.BUTTON_NEGATIVE:
@@ -190,7 +194,15 @@ public class ViagemListActivity extends ListActivity implements OnItemClickListe
 		}
 	}
 	
-private class ViagemViewBinder implements android.widget.SimpleAdapter.ViewBinder {
+	private void removerViagem(String id){
+		SQLiteDatabase db = helper.getWritableDatabase();
+		String where [] = new String[]{ id };
+		db.delete("gasto", "viagem_id = ?", where);
+		db.delete("viagem", "_id = ?", where);
+	}
+	
+	
+	private class ViagemViewBinder implements android.widget.SimpleAdapter.ViewBinder {
 		
 		@Override
 		public boolean setViewValue(View view, Object data, String textRepresentation) {
@@ -201,8 +213,8 @@ private class ViagemViewBinder implements android.widget.SimpleAdapter.ViewBinde
 				progressBar.setSecondaryProgress(valores[1].intValue());
 				progressBar.setProgress(valores[2].intValue());
 				return true;
-				}
-				return false;
+			}
+			return false;
 
 		}
 		

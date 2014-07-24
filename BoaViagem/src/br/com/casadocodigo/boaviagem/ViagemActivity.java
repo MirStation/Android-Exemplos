@@ -1,5 +1,6 @@
 package br.com.casadocodigo.boaviagem;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -8,6 +9,7 @@ import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -37,6 +39,8 @@ public class ViagemActivity extends Activity {
 	private Date  dataChegada, dataSaida;
 	private RadioGroup radioGroup;
 	
+	private String id;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,7 +65,37 @@ public class ViagemActivity extends Activity {
 		radioGroup = (RadioGroup) findViewById(R.id.tipoViagem);
 		// Acesso à base de dados
 		helper = new DatabaseHelper(this);
+		
+		// Uptade ou Nova viagem
+		id = getIntent().getStringExtra(Constantes.VIAGEM_ID);
+		if(id != null){
+			prepararEdicao();
+		}
+
 	}
+	
+	private void prepararEdicao() {
+		SQLiteDatabase db = helper.getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT tipo_viagem, destino, data_chegada, " +
+									"data_saida, quantidade_pessoas, orcamento " +
+									"FROM viagem WHERE _id = ?", new String[]{ id });
+		cursor.moveToFirst();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		if(cursor.getInt(0) == Constantes.VIAGEM_LAZER){
+			radioGroup.check(R.id.lazer);
+		} else {
+			radioGroup.check(R.id.negocios);
+		}
+		destino.setText(cursor.getString(1));
+		dataChegada = new Date(cursor.getLong(2));
+		dataSaida = new Date(cursor.getLong(3));
+		dataChegadaButton.setText(dateFormat.format(dataChegada));
+		dataSaidaButton.setText(dateFormat.format(dataSaida));
+		quantidadePessoas.setText(cursor.getString(4));
+		orcamento.setText(cursor.getString(5));
+		cursor.close();
+	}
+
 	
 	@SuppressWarnings("deprecation")
 	public void selecionarData(View view) {
@@ -122,7 +156,13 @@ public class ViagemActivity extends Activity {
 			values.put("tipo_viagem", Constantes.VIAGEM_NEGOCIOS);
 		}
 		
-		long resultado = db.insert("viagem", null, values);
+		long resultado;
+		if(id == null){
+			resultado = db.insert("viagem", null, values);
+		} else {
+			resultado = db.update("viagem", values, "_id = ?",new String[]{ id });
+		}
+
 		if(resultado != -1 ) {
 			Toast.makeText(this, getString(R.string.registro_salvo),Toast.LENGTH_SHORT).show();
 		} else {
