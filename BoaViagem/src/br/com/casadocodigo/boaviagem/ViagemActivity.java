@@ -5,8 +5,8 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -48,6 +48,8 @@ public class ViagemActivity extends Activity {
 		ano_saida = calendar.get(Calendar.YEAR);
 		mes_saida = calendar.get(Calendar.MONTH);
 		dia_saida = calendar.get(Calendar.DAY_OF_MONTH);
+		dataChegada = new Date(calendar.getTimeInMillis());
+		dataSaida = new Date(calendar.getTimeInMillis());
 		dataChegadaButton = (Button) findViewById(R.id.dataChegada);
 		dataSaidaButton = (Button) findViewById(R.id.dataSaida);
 		isChegada = false;
@@ -57,8 +59,6 @@ public class ViagemActivity extends Activity {
 		quantidadePessoas = (EditText) findViewById(R.id.quantidadePessoas);
 		orcamento = (EditText) findViewById(R.id.orcamento);
 		radioGroup = (RadioGroup) findViewById(R.id.tipoViagem);
-		dataChegada = new Date();
-		dataSaida = new Date();
 		// Acesso à base de dados
 		helper = new DatabaseHelper(this);
 	}
@@ -83,18 +83,23 @@ public class ViagemActivity extends Activity {
 	}
 	
 	private OnDateSetListener listener = new OnDateSetListener() {
+		
 		@Override
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(year, monthOfYear, dayOfMonth);
 			if(isChegada){
 				ano_chegada = year;
 				mes_chegada = monthOfYear;
 				dia_chegada = dayOfMonth;
+				dataChegada = calendar.getTime();
 				dataChegadaButton.setText(dia_chegada + " / " + (mes_chegada + 1) + " / " + ano_chegada);
 			} else {
 				ano_saida = year;
 				mes_saida = monthOfYear;
 				dia_saida = dayOfMonth;
+				dataSaida = calendar.getTime();
 				dataSaidaButton.setText(dia_saida + " / " + (mes_saida + 1) + " / " + ano_saida);
 			}
 		}
